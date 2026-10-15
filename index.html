@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10111a">
+  <meta name="description" content="Legacy Flash — free browser arcade games.">
+  <title>Legacy Flash | The Arcade Never Dies</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: #0b0c12; color: #f4f4fa;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      padding: 22px 7%; border-bottom: 1px solid #303044;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-size: 23px; font-weight: 900; letter-spacing: 2px; }
+    .logo span, h1 span { color: #ffc857; }
+    header small { color: #a1a3b9; }
+    main { width: min(1050px, 90%); margin: auto; }
+    .hero { padding: 65px 0 35px; }
+    .tag { color: #ffc857; font-size: 12px; letter-spacing: 3px; }
+    h1 { font-size: clamp(42px, 8vw, 76px); margin: 16px 0; }
+    .intro { color: #a1a3b9; line-height: 1.7; max-width: 550px; }
+    button, input {
+      font: inherit; border-radius: 9px; padding: 12px;
+    }
+    button { cursor: pointer; border: 1px solid #39394f; }
+    .primary { background: #ffc857; color: #17151b; font-weight: bold; }
+    .search { width: 100%; background: #171824; color: white;
+      border: 1px solid #39394f; margin: 18px 0 12px; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter { background: #171824; color: #b4b6c8; }
+    .filter.active { background: #ffc857; color: #17151b; }
+    h2 { margin-top: 45px; }
+    .games { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .card { background: #151723; border: 1px solid #303044;
+      padding: 20px; border-radius: 14px; }
+    .art { font-size: 45px; background: #202239; padding: 25px;
+      text-align: center; border-radius: 10px; }
+    .card p { color: #a1a3b9; line-height: 1.5; min-height: 38px; }
+    .play { width: 100%; background: #222438; color: white; }
+    .play:hover { background: #ffc857; color: #17151b; }
+    #game { display: none; margin: 25px 0; padding: 20px;
+      background: #151723; border: 1px solid #39394f; border-radius: 14px; }
+    canvas { display: block; max-width: 100%; background: #090b15;
+      border: 1px solid #39394f; margin: 15px auto; }
+    footer { margin-top: 50px; padding: 25px; border-top: 1px solid #303044;
+      color: #a1a3b9; text-align: center; font-size: 12px; }
+    @media(max-width: 700px) {
+      .games { grid-template-columns: repeat(2, 1fr); }
+      header { padding: 18px 5%; }
+    }
+    @media(max-width: 450px) {
+      .games { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><span>⚡</span> LEGACY FLASH</div>
+    <small>THE ARCADE NEVER DIES</small>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="tag">✦ YOUR ARCADE STARTS HERE</div>
+      <h1>Old-school games.<br><span>New-school chaos.</span></h1>
+      <p class="intro">Quick challenges, arcade runs and one-more-round energy.
+        Pick a game and jump straight in. No downloads needed.</p>
+      <button class="primary" onclick="document.querySelector('#library').scrollIntoView({behavior:'smooth'})">▶ Explore games</button>
+    </section>
+
+    <section id="library">
+      <h2>Choose your next obsession</h2>
+      <input class="search" id="search" placeholder="Search games..." aria-label="Search games">
+      <div class="filters">
+        <button class="filter active" data-cat="All">All games</button>
+        <button class="filter" data-cat="Arcade">Arcade</button>
+        <button class="filter" data-cat="Puzzle">Puzzle</button>
+      </div>
+
+      <div class="games" id="games">
+        <article class="card" data-name="neon dodge" data-cat="Arcade">
+          <div class="art">⚡</div><h3>Neon Dodge</h3>
+          <p>Dodge the falling blocks. How long can you survive?</p>
+          <button class="play" onclick="startGame()">▶ Play now</button>
+        </article>
+        <article class="card" data-name="memory match" data-cat="Puzzle">
+          <div class="art">🧠</div><h3>Memory Match</h3>
+          <p>Train your brain and find the matching pairs.</p>
+          <button class="play" onclick="memoryGame()">▶ Play now</button>
+        </article>
+        <article class="card" data-name="click rush" data-cat="Arcade">
+          <div class="art">🎯</div><h3>Click Rush</h3>
+          <p>Test your speed in a ten-second click challenge.</p>
+          <button class="play" onclick="clickRush()">▶ Play now</button>
+        </article>
+        <article class="card" data-name="pixel quest" data-cat="Arcade">
+          <div class="art">👾</div><h3>Pixel Quest</h3>
+          <p>A classic arcade look for our growing game library.</p>
+          <button class="play" onclick="startGame()">▶ Play now</button>
+        </article>
+        <article class="card" data-name="neon racer" data-cat="Arcade">
+          <div class="art">🏎️</div><h3>Neon Racer</h3>
+          <p>Our racing category is ready for more browser games.</p>
+          <button class="play" onclick="startGame()">▶ Play now</button>
+        </article>
+        <article class="card" data-name="brain breaker" data-cat="Puzzle">
+          <div class="art">💎</div><h3>Brain Breaker</h3>
+          <p>Take a break and challenge your puzzle skills.</p>
+          <button class="play" onclick="memoryGame()">▶ Play now</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="game">
+      <h2 id="gameTitle">Neon Dodge</h2>
+      <p id="instructions">Use the left and right arrow keys to dodge the blocks.</p>
+      <canvas id="canvas" width="500" height="300"></canvas>
+      <p id="score">Score: 0</p>
+      <button class="primary" onclick="startGame()">Restart game</button>
+      <button onclick="stopGame()">Close game</button>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> LEGACY FLASH · MADE FOR THE LOVE OF GAMES</footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    let category = "All";
+    const cards = [...document.querySelectorAll(".card")];
+
+    function filterGames() {
+      const query = document.getElementById("search").value.toLowerCase();
+      cards.forEach(card => {
+        const matchesText = card.dataset.name.includes(query);
+        const matchesCategory = category === "All" || card.dataset.cat === category;
+        card.style.display = matchesText && matchesCategory ? "" : "none";
+      });
+    }
+    document.getElementById("search").addEventListener("input", filterGames);
+    document.querySelectorAll(".filter").forEach(button => {
+      button.addEventListener("click", () => {
+        category = button.dataset.cat;
+        document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+        filterGames();
+      });
+    });
+
+    const section = document.getElementById("game");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let player, blocks, score, running, animation, keys = {};
+
+    function startGame() {
+      section.style.display = "block";
+      document.getElementById("gameTitle").textContent = "Neon Dodge";
+      document.getElementById("instructions").textContent =
+        "Use ← → or A / D to dodge the falling blocks.";
+      cancelAnimationFrame(animation);
+      player = {x: 235, y: 265, w: 30, h: 18};
+      blocks = []; score = 0; running = true;
+      section.scrollIntoView({behavior:"smooth"});
+      loop();
+    }
+    function stopGame() {
+      running = false;
+      cancelAnimationFrame(animation);
+      section.style.display = "none";
+    }
+    document.addEventListener("keydown", e => {
+      keys[e.key.toLowerCase()] = true;
+      if (["ArrowLeft","ArrowRight"].includes(e.key)) e.preventDefault();
+    });
+    document.addEventListener("keyup", e => keys[e.key.toLowerCase()] = false);
+
+    function loop() {
+      if (!running) return;
+      ctx.fillStyle = "#090b15";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (keys.arrowleft || keys.a) player.x -= 5;
+      if (keys.arrowright || keys.d) player.x += 5;
+      player.x = Math.max(0, Math.min(canvas.width-player.w, player.x));
+      if (Math.random() < 0.035) blocks.push({
+        x: Math.random()*(canvas.width-22), y:-20, w:20, h:20
+      });
+      blocks.forEach(b => b.y += 3);
+      blocks = blocks.filter(b => b.y < canvas.height);
+      ctx.fillStyle = "#ff6dba";
+      blocks.forEach(b => ctx.fillRect(b.x,b.y,b.w,b.h));
+      ctx.fillStyle = "#6ee7f9";
+      ctx.fillRect(player.x,player.y,player.w,player.h);
+      score++;
+      document.getElementById("score").textContent = "Score: " + score;
+      if (blocks.some(b => player.x < b.x+b.w && player.x+player.w > b.x &&
+          player.y < b.y+b.h && player.y+player.h > b.y)) {
+        running = false;
+        ctx.fillStyle = "white"; ctx.font = "28px Arial";
+        ctx.fillText("GAME OVER", 165, 150);
+        return;
+      }
+      animation = requestAnimationFrame(loop);
+    }
+
+    function memoryGame() {
+      running = false; cancelAnimationFrame(animation);
+      section.style.display = "block";
+      document.getElementById("gameTitle").textContent = "Memory Match";
+      document.getElementById("instructions").textContent =
+        "Memorize the symbols, then find matching pairs. Refresh the page to reset.";
+      section.scrollIntoView({behavior:"smooth"});
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      const icons = ["🚀","👾","🎮","⚡","🚀","👾","🎮","⚡"]
+        .sort(() => Math.random()-.5);
+      let opened = [], matched = new Set();
+      const tileW = 100, tileH = 95, gap = 18;
+      function draw() {
+        ctx.fillStyle = "#090b15"; ctx.fillRect(0,0,canvas.width,canvas.height);
+        icons.forEach((icon,i) => {
+          const x = 18+(i%4)*(tileW+gap), y = 8+Math.floor(i/4)*(tileH+gap);
+          ctx.fillStyle = matched.has(i) ? "#174e3a" : "#222438";
+          ctx.fillRect(x,y,tileW,tileH);
+          ctx.fillStyle = "white"; ctx.font = "30px Arial";
+          ctx.fillText(matched.has(i)||opened.includes(i) ? icon : "?",x+35,y+55);
+        });
+      }
+      canvas.onclick = e => {
+        const r = canvas.getBoundingClientRect();
+        const x = (e.clientX-r.left)*canvas.width/r.width;
+        const y = (e.clientY-r.top)*canvas.height/r.height;
+        const col = Math.floor((x-18)/(tileW+gap));
+        const row = Math.floor((y-8)/(tileH+gap));
+        const i = row*4+col;
+        if (i<0||i>=icons.length||opened.length===2||matched.has(i)||opened.includes(i)) return;
+        opened.push(i); draw();
+        if(opened.length===2) {
+          if(icons[opened[0]]===icons[opened[1]]) { opened.forEach(n=>matched.add(n)); opened=[]; draw(); }
+          else setTimeout(()=>{opened=[];draw()},650);
+        }
+      };
+      draw();
+    }
+
+    function clickRush() {
+      running = false; cancelAnimationFrame(animation);
+      section.style.display = "block";
+      document.getElementById("gameTitle").textContent = "Click Rush";
+      document.getElementById("instructions").textContent =
+        "Click the gold target as many times as you can in 10 seconds.";
+      section.scrollIntoView({behavior:"smooth"});
+      let count = 0, time = 10;
+      ctx.fillStyle = "#090b15"; ctx.fillRect(0,0,canvas.width,canvas.height);
+      const target = {x:200,y:100,r:45};
+      function drawTarget() {
+        ctx.fillStyle="#ffc857";ctx.beginPath();ctx.arc(target.x,target.y,target.r,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle="#17151b";ctx.font="bold 18px Arial";ctx.fillText("CLICK!",target.x-30,target.y+6);
+        document.getElementById("score").textContent = "Score: "+count+" · Time: "+time;
+      }
+      drawTarget();
+      canvas.onclick = e => {
+        if(time<=0)return;
+        const r=canvas.getBoundingClientRect(),x=(e.clientX-r.left)*canvas.width/r.width,y=(e.clientY-r.top)*canvas.height/r.height;
+        if(Math.hypot(x-target.x,y-target.y)<target.r) {count++;target.x=60+Math.random()*380;target.y=60+Math.random()*180;drawTarget();}
+      };
+      const timer=setInterval(()=>{time--;drawTarget();if(time<=0){clearInterval(timer);document.getElementById("instructions").textContent="Time's up! Final score: "+count+". Play again by choosing Click Rush.";canvas.onclick=null;}},1000);
+    }
+  </script>
+</body>
+</html>
